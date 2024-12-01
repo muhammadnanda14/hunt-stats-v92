@@ -55,7 +55,6 @@ const frameHandler = frames(async (ctx) => {
       const parsedUrl = new URL(url);
       let fid = parsedUrl.searchParams.get("userfid");
 
-      //console.log("Extracted FID from URL:", fid);
       return fid;
     } catch (e) {
       console.error("Error parsing URL:", e);
@@ -67,7 +66,6 @@ const frameHandler = frames(async (ctx) => {
 
   if (ctx.message?.requesterFid) {
     fid = ctx.message.requesterFid.toString();
-    //console.log("Using requester FID:", fid);
   } else if (ctx.url) {
     fid = extractFid(ctx.url.toString());
     console.log("Extracted FID from URL:", fid);
@@ -133,14 +131,7 @@ const frameHandler = frames(async (ctx) => {
       : `Check yours HUNT STATS`
   );
 
-  // Change the url here
-  /*
-  const shareUrl = `https://warpcast.com/~/compose?text=${shareText}&embeds[]=https://check-hunt-stats-v1.vercel.app/frames${
-    fid ? `?userfid=${fid}&c=${cacheBust}` : `?userfid=${fid}&c=${cacheBust}`
-  }`; 
-  */
   const cacheBust = new Date().getTime();
-  //const fidEncoded = fid ? encodeURIComponent(fid) : "";
 
   const shareUrl = `https://warpcast.com/~/compose?text=${shareText}&embeds[]=${encodeURIComponent(
     appURL() +
@@ -148,8 +139,6 @@ const frameHandler = frames(async (ctx) => {
         ? `?userfid=${fid}&c=${cacheBust}`
         : `?cache=${cacheBust}`)
   )}`;
-
-  //const checkStatusUrl = `${appURL()}?userfid=${fidEncoded}&c=${cacheBust}`;
 
   const buttons = [];
 
